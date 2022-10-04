@@ -4,7 +4,7 @@
             class="mx-auto"
         >
         <v-list
-          :items="users"
+          :items="items"
           item-props
           lines="three"
         >
@@ -20,7 +20,7 @@
 <script setup>
 
 const props = defineProps({
-    users: Array
+    items: Array
 })
 
 </script>
