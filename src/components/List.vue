@@ -55,6 +55,9 @@ const click = (score, country) => {
   .v-list-item__prepend {
     cursor: pointer;
   }
+  .v-list-item-subtitle {
+    display: block;
+  }
   .list-move, /* apply transition to moving elements */
   .list-enter-active,
   .list-leave-active {
