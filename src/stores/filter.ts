@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref,  } from 'vue'
+import { ref } from 'vue'
 
 export const useFilterStore = defineStore('filter', () => {
 
@@ -8,8 +8,8 @@ export const useFilterStore = defineStore('filter', () => {
         score: null,
     })
 
-    function setFilter(name, value) {
-        filterState.value[name] = value
+    function setFilter(name: string, value: string) {
+        name && (filterState.value[name] = value)
     }
 
     return { filterState, setFilter }

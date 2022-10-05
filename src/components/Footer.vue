@@ -8,7 +8,7 @@
     <v-divider></v-divider>
 
     <v-card-text class="white--text">
-      {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+      {{ new Date().getFullYear() }} — <strong>Vuetify 3 beta, Vue 3, Pinia, TypeScript</strong>
     </v-card-text>
   </v-card>
 </template>

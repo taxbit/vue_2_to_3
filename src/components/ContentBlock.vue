@@ -39,12 +39,12 @@
   
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import List from './List.vue';
 import Filters from './Filters.vue';
 import UserInfo from './UserInfo.vue';
-import { useFilterStore } from '@/stores/filter.js'
+import { useFilterStore } from '@/stores/filter'
 
 const selectedUserInfo = ref(null)
 const showDialog = ref(false)
@@ -72,12 +72,12 @@ const results = computed(() => {
   let filtered = []
 
   if (!store.filterState.country != !store.filterState.score) {
-    filtered = users.value.filter((user)=>{
+    filtered = users.value.filter((user: Record<string, string>)=>{
       return store.filterState.country ? user.country == store.filterState.country 
       : eval(`${user.score}${store.filterState.score}`)
     })
   } else if (store.filterState.country || store.filterState.score) {
-      filtered = users.value.filter((user)=>{
+      filtered = users.value.filter((user: Record<string, string>)=>{
         return user.country == store.filterState.country && 
         (store.filterState.score && eval(`${user.score}${store.filterState.score}`))
       })

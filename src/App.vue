@@ -5,7 +5,7 @@
     </v-main>
 
     <v-footer app v-bind="localAttrs">
-      <Footer/>
+      <Footer></Footer>
     </v-footer>
   </v-app>
 </template>

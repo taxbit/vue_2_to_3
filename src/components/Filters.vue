@@ -1,10 +1,10 @@
-<script setup>
-    import { useFilterStore } from '@/stores/filter.js'
+<script setup lang="ts">
+    import { useFilterStore } from '@/stores/filter'
     import { ref } from 'vue';
 
-    const props = defineProps({
-        variants: Array,
-    })
+    const props = defineProps<{
+        variants: Array<Array<string>>,
+    }>()
 
     const showProgress = ref(false)
 

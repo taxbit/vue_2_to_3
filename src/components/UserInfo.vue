@@ -13,11 +13,11 @@
     </v-dialog>
 </template>
 
-<script setup>
-    const props = defineProps({
-        info: Object,
-        showDialog: Boolean,
-    })
+<script setup lang="ts">
+    const props = defineProps<{
+        info: { country: string, score: string } | null,
+        showDialog: boolean | undefined,
+    }>()
     const emit = defineEmits(['closeDialog'])
 
 </script>
