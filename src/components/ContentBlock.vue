@@ -59,7 +59,7 @@ const variants = ref([
 const users = ref([])
 
 onMounted(()=>{
-  fetch('https://mocki.io/v1/169641f1-e2c5-4b7a-93cf-afa088578b77')
+  fetch('https://mocki.io/v1/a6ef6d76-4474-44b7-a28f-1643daaa28f1')
   .then((response) => {
     return response.json();
   })
