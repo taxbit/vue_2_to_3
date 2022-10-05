@@ -27,7 +27,11 @@
           md="4"
       >
 
-      <List :items="results"/>
+      <List :items="results" @userSelect="(data)=>{ selectedUserInfo=data, showDialog=true }"/>
+      <UserInfo v-if="showDialog" 
+                :showDialog="showDialog"
+                @closeDialog="showDialog=false" 
+                :info="selectedUserInfo"/>
 
       </v-col>
     </v-row>
@@ -39,7 +43,11 @@
 import { ref, computed, onMounted } from 'vue';
 import List from './List.vue';
 import Filters from './Filters.vue';
+import UserInfo from './UserInfo.vue';
 import { useFilterStore } from '@/stores/filter.js'
+
+const selectedUserInfo = ref(null)
+const showDialog = ref(false)
 
 const store = useFilterStore()
 
@@ -48,60 +56,35 @@ const variants = ref([
   ['> 20','< 10',]
 ]);
 
+const users = ref([])
+
 onMounted(()=>{
-  
+  fetch('https://mocki.io/v1/169641f1-e2c5-4b7a-93cf-afa088578b77')
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    users.value = data
+  });
 })
 
-const users = ref(
-  [
-      { type: 'subheader', title: 'List' },
-      {
-        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        title: 'Brunch this weekend?',
-        subtitle: `<span class="text-primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        country: 'usa',
-        score: 9
-      },
-      { type: 'divider', inset: true },
-      {
-        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-        title: 'Summer BBQ',
-        subtitle: `<span class="text-primary">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
-        country: 'russia',
-        score: 25
-      },
-      { type: 'divider', inset: true },
-      {
-        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-        title: 'Oui oui',
-        subtitle: '<span class="text-primary">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
-        country: 'usa',
-        score: 4
-      },
-      { type: 'divider', inset: true },
-      {
-        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-        title: 'Birthday gift',
-        subtitle: '<span class="text-primary">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
-        country: 'usa',
-        score: 50
-      },
-      { type: 'divider', inset: true },
-      {
-        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-        title: 'Recipe to try',
-        subtitle: '<span class="text-primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-        country: 'russia',
-        score: 103
-      },
-    ],
-      )
-
 const results = computed(() => {
-  return store.filterState.score && users.value.filter((user)=>{
-      return user.country == store.filterState.country 
-        && eval(`${user.score}${store.filterState.score}`)
-    }) || users.value
+  let filtered = []
+
+  if (!store.filterState.country != !store.filterState.score) {
+    filtered = users.value.filter((user)=>{
+      return store.filterState.country ? user.country == store.filterState.country 
+      : eval(`${user.score}${store.filterState.score}`)
+    })
+  } else if (store.filterState.country || store.filterState.score) {
+      filtered = users.value.filter((user)=>{
+        return user.country == store.filterState.country && 
+        (store.filterState.score && eval(`${user.score}${store.filterState.score}`))
+      })
+  } else filtered = users.value
+
+  return filtered
+
 })
 
 
