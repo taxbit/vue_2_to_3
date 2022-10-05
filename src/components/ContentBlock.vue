@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import List from './List.vue';
 import Filters from './Filters.vue';
 import { useFilterStore } from '@/stores/filter.js'
@@ -47,6 +47,10 @@ const variants = ref([
   ['russia', 'usa',],
   ['> 20','< 10',]
 ]);
+
+onMounted(()=>{
+  
+})
 
 const users = ref(
   [
